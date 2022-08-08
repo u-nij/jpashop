@@ -26,10 +26,17 @@ public class Category {
     private List<Item> items = new ArrayList<>();
 
     // 계층 구조
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+    // 연관관계 편의 메서드
+    public void addChildCategory(Category child){
+        // parent, child 각각에 들어가야 함
+        this.child.add(child);
+        child.setParent(this);
+    }
 }
