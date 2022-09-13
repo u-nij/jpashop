@@ -1,5 +1,6 @@
 package jpabook.jpashop.Service;
 
+import jpabook.jpashop.Domain.Item.Book;
 import jpabook.jpashop.Domain.Item.Item;
 import jpabook.jpashop.Repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,17 @@ public class ItemService {
     public void saveItem(Item item){
         itemRepository.save(item);
     }
+
+    // 변경 감지 기능
+    @Transactional
+    public void updateItem(Long itemId, String name, int price, int stockQuantity){
+        Item findItem = itemRepository.findOne(itemId); // 영속 상태
+        findItem.setName(name);
+        findItem.setPrice(price);
+        findItem.setStockQuantity(stockQuantity);
+    }
+
+    // 병합: 준영속 상태의 엔티티를 영속 상태로 변경할 때 사용하는 기능
 
     public List<Item> findItems() {
         return itemRepository.findAll();
