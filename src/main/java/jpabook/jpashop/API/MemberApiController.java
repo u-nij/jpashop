@@ -93,4 +93,5 @@ public class MemberApiController {
     static class MemberDto {
         private String name;
     }
+
 }
